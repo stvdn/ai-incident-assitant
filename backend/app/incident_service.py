@@ -3,6 +3,9 @@ from sqlalchemy import select
 from app.incident import IncidentCreate
 from app.models import Incident
 from uuid import UUID
+import logging
+
+logger = logging.getLogger("incident_assistant")
 
 def create_incident(session: Session, data: IncidentCreate) -> Incident:
     incident = Incident(
@@ -13,6 +16,10 @@ def create_incident(session: Session, data: IncidentCreate) -> Incident:
     session.add(incident)
     session.commit()
     session.refresh(incident)
+    logger.info(
+        "incident_created",
+        extra={"incident_id": str(incident.id)},
+    )
     return incident
 
 def get_incident(session: Session, incident_id: UUID) -> Incident | None:

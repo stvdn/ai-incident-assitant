@@ -1,14 +1,17 @@
-from fastapi import Depends, FastAPI, status, HTTPException, Query
-from uuid import UUID
+from fastapi import Depends, FastAPI, status, HTTPException, Query, Request, Response
+from uuid import UUID, uuid4
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from sqlalchemy.orm import Session
 from app.database import get_session, get_engine
 from app.incident import IncidentCreate, IncidentResponse, IncidentListResponse
 from app.incident_service import create_incident, get_incident, list_incidents
+from app.errors import register_error_handlers, handle_unexpected_error
+from app.logging_config import configure_logging
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    configure_logging()
     engine = get_engine()
     try:
         yield
@@ -21,6 +24,20 @@ def create_app() -> FastAPI:
         version="0.1.0",
         lifespan=lifespan,
     )
+
+    register_error_handlers(app)
+
+    @app.middleware("http")
+    async def add_request_id(request: Request, call_next) -> Response:
+        request.state.request_id = str(uuid4())
+
+        try:
+            response = await call_next(request)
+        except Exception as exc:
+            response = await handle_unexpected_error(request, exc)
+
+        response.headers["X-Request-ID"] = request.state.request_id
+        return response
 
     @app.get("/health", tags=["health"])
     def health_check() -> dict[str, str]:

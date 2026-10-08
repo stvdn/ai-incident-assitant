@@ -12,7 +12,7 @@ La API valida peticiones, coordina crear/consultar/listar incidentes y devuelve 
 
 El contrato implementado de Fase 1 contiene `id`, `job_name`, `log`, `exit_code` y `created_at`. `job_name` y `log` son entrada obligatoria del cliente; `exit_code` es opcional. El servidor genera el UUID y PostgreSQL asigna la fecha. Se excluye `status` y se guarda `log` en PostgreSQL con un máximo de 64 KiB en UTF-8. Los campos de análisis se reservan para Fase 2; ver [004-incident-contract.md](decisions/004-incident-contract.md).
 
-Las rutas de `backend/app/main.py` validan los contratos de `incident.py` y llaman a `incident_service.py`. `get_session()` entrega una sesión por petición, revierte ante un fallo y siempre la cierra. La creación confirma la transacción en el servicio antes de responder; el listado ordena por fecha e ID descendentes y aplica `limit`/`offset`. Alembic reconstruye el esquema mediante una migración versionada.
+Las rutas de `backend/app/main.py` validan los contratos de `incident.py` y llaman a `incident_service.py`. `get_session()` entrega una sesión por petición, revierte ante un fallo y siempre la cierra. La creación confirma la transacción en el servicio antes de responder; el listado ordena por fecha e ID descendentes y aplica `limit`/`offset`. Alembic reconstruye el esquema mediante una migración versionada. Los errores, la configuración de arranque y el logging JSON se describen en [005-errors-config-logging.md](decisions/005-errors-config-logging.md).
 
 El repositorio contiene hoy código en `backend/`, no en `src/`. Esta documentación adopta la jerarquía objetivo para los documentos, pero no describe `src/` como implementación activa.
 
