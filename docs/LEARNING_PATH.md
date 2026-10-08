@@ -14,7 +14,7 @@ Este recorrido reconstruye los cambios que se habían acumulado sin commits. Las
 | 6 | `feat/errors-config-logging` | Dos commits: validación de configuración al arrancar; después errores 404/422/500, request ID y eventos JSON. |
 | 7 | `docs/learning-path` | Estado integrado, instrucciones de ejecución y evidencia actualizada. |
 
-Cada rama permite inspeccionar el código sin cambios de hitos posteriores. Los nuevos commits descienden de `38279a8`; `main` conserva ese punto de partida mientras se revisa la integración.
+Cada rama permite inspeccionar el código sin cambios de hitos posteriores. Los nuevos commits descienden de `38279a8`; `feat/health` conserva ese punto de partida. `main` integra el recorrido completo mediante fast-forward y `docs/learning-path` apunta al mismo estado integrado.
 
 ## Cómo recorrerlo
 
@@ -32,7 +32,7 @@ Para ver un commit individual usa `git show <hash>`. Evita estudiar todas las di
 git switch docs/learning-path
 ```
 
-Las ramas se crean localmente. Cuando estén publicadas, una persona que clone el repositorio podrá usar los mismos nombres; comprueba su disponibilidad con `git branch -a`.
+`main` y las siete ramas del recorrido se publican juntas mediante un push atómico con referencias explícitas, sin forzar ni reescribir el historial. Una persona que clone el repositorio puede comprobarlas con `git branch -a` y recorrerlas usando los mismos nombres. Las ramas intermedias conservan sus checkpoints para estudiar cada etapa.
 
 ## Preparar y comprobar cada etapa
 
