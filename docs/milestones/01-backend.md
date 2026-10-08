@@ -2,7 +2,7 @@
 
 **Resultado de la fase:** registrar y consultar incidentes de forma confiable en PostgreSQL, sin depender de AI. Debe ser posible explicar el recorrido de cada request, las transacciones, validaciones, pruebas y decisiones. Fuente: [ruta guiada de Notion](https://app.notion.com/p/3e422251ed548196b882c8dc07a4be1f), consultada el 26 de septiembre de 2026. El estado verificable vive en [progress.md](../progress.md).
 
-**Modo de trabajo:** el usuario propone un diseño o intento; el tutor responde con preguntas y pistas por nivel conceptual, dirección o casi concreta cuando se pidan. Solo cerrar un hito con evidencia y explicación propia. Una solicitud directa de implementación del usuario prevalece sobre este modo. Cada decisión relevante se documenta con contexto, opciones, ventaja, costo, forma de validarla y condición para cambiarla.
+**Modo de trabajo:** seguir el apoyo gradual de [ai-incident-coach](../../.codex/skills/ai-incident-coach/SKILL.md): Codex muestra y explica un ejemplo funcional cuando el concepto es nuevo; el usuario revisa y modifica una parte pequeña antes de intentar escribir una solución independiente. Proponer un solo ejercicio a la vez y ayudar con código si se bloquea. Solo cerrar un hito con evidencia y explicación propia. Una solicitud directa de implementación del usuario prevalece sobre este modo. Cada decisión relevante se documenta con contexto, opciones, ventaja, costo, forma de validarla y condición para cambiarla.
 
 ## Secuencia y dependencias
 
