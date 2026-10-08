@@ -1,14 +1,25 @@
 from fastapi import Depends, FastAPI, status, HTTPException, Query
 from uuid import UUID
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from sqlalchemy.orm import Session
-from app.database import get_session
+from app.database import get_session, get_engine
 from app.incident import IncidentCreate, IncidentResponse, IncidentListResponse
 from app.incident_service import create_incident, get_incident, list_incidents
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    engine = get_engine()
+    try:
+        yield
+    finally:
+        engine.dispose()
 
 def create_app() -> FastAPI:
     app = FastAPI(
         title="AI Incident Assistant",
         version="0.1.0",
+        lifespan=lifespan,
     )
 
     @app.get("/health", tags=["health"])

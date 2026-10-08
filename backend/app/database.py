@@ -1,18 +1,19 @@
-import os
+from app.config import required_env, postgres_port
 from functools import lru_cache
 from sqlalchemy import create_engine, URL, Engine
 from sqlalchemy.orm import Session
 from collections.abc import Generator
 
+
 @lru_cache
 def get_engine() -> Engine:
     url = URL.create(
         drivername="postgresql+psycopg",
-        username=os.environ["POSTGRES_USER"],
-        password=os.environ["POSTGRES_PASSWORD"],
-        host=os.environ["POSTGRES_HOST"],
-        port=int(os.environ["POSTGRES_PORT"]),
-        database=os.environ["POSTGRES_DB"],
+        username=required_env("POSTGRES_USER"),
+        password=required_env("POSTGRES_PASSWORD"),
+        host=required_env("POSTGRES_HOST"),
+        port=postgres_port(),
+        database=required_env("POSTGRES_DB"),
     )
 
     return create_engine(
