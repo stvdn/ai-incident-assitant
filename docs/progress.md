@@ -14,8 +14,10 @@
 | Hito 7 — Estrategia de pruebas | Parcial, sin verificar | Existen pruebas de health y conexión; faltan cobertura de casos de uso, aislamiento y ejecución comprobada. |
 | Hito 8 — CI | Pendiente | No se observó workflow de GitHub Actions. |
 
-**Siguiente paso de aprendizaje:** cerrar el Hito 0 con la respuesta consolidada descrita en [01-backend.md](milestones/01-backend.md), sin darlo por aprobado por la sola existencia de documentación. Después verificar los criterios de los hitos 1 y 2 sobre el código existente.
+**Siguiente paso de aprendizaje:** continuar con la siguiente etapa; los criterios iniciales y CI conservan sus pendientes. No interpretar una rama como cierre automático de un hito.
 
 ## Registro de avances
 
 Para cada hito cerrado, añadir fecha, cambio realizado, comando o prueba ejecutada, resultado y explicación del usuario. Si una verificación depende de PostgreSQL, indicar cómo se levantó y cómo se aislaron los datos. Mantener las decisiones en [decisions/](decisions/).
+
+- **7 de octubre de 2026 — Versionado por etapas:** checkpoint `database` verificado con `python -m pytest`: 2 casos aprobados sobre una base PostgreSQL temporal nueva. Las credenciales proceden del entorno local de pruebas y no se versionan. Se usa el intérprete del entorno uv existente; no se afirma instalación desde un entorno limpio.

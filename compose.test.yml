@@ -1,0 +1,18 @@
+services:
+  db-test:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: incidents_test
+      POSTGRES_USER: incident_test
+      POSTGRES_PASSWORD: local_test_password
+    ports:
+      - "127.0.0.1:5433:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U incident_test -d incidents_test
+      interval: 2s
+      timeout: 5s
+      retries: 15
