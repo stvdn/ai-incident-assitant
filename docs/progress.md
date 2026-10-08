@@ -18,6 +18,8 @@
 
 ## Registro de avances
 
+- **7 de octubre de 2026 — Ramas organizadas por fase:** por solicitud del usuario, el recorrido usa `fase-1/00-preparacion`, `fase-1/01-fastapi`, `fase-1/02-postgresql`, `fase-1/03-04-persistencia`, `fase-1/05-endpoints`, `fase-1/06-configuracion-errores-logging` y `fase-1/backend`. Todos son checkpoints de Fase 1; las fases posteriores conservan su estado pendiente. Se actualiza la guía y se prepara la sustitución de nombres locales y remotos conservando los commits; `main` y `fase-1/backend` contienen el estado integrado. El backend no cambia.
+
 - **7 de octubre de 2026 — Integración en main y preparación de publicación:** `main` se actualizó mediante `git merge --ff-only docs/learning-path` después de comprobar que `origin/main` no tenía commits adicionales. Se conservan las siete ramas de aprendizaje y el historial de commits. Se prepara un push atómico de `main` y esas ramas, con referencias explícitas y sin force; `docs/learning-path` se mantiene alineada con `main`. El backend es el mismo que aprobó las 33 pruebas; estos cambios solo actualizan documentación y referencias Git.
 
 - **7 de octubre de 2026 — Nombres convencionales de ramas:** por solicitud del usuario se retiró el prefijo `codex/` y se usaron `feat/`, `test/`, `chore/` y `docs/`. Las referencias de la guía se actualizaron; el renombrado conserva los commits de las etapas y no cambia el backend. La rama integrada se llama `docs/learning-path`; las ramas siguen siendo locales.
