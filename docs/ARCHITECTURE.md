@@ -10,7 +10,9 @@ flowchart LR
 
 La API valida peticiones, coordina crear/consultar/listar incidentes y devuelve respuestas HTTP. SQLAlchemy administra acceso a datos; Alembic versiona el esquema. El contrato de Fase 1 no incluye análisis con AI ni operaciones de actualizar o borrar. Los límites entre rutas, servicio, repositorio y persistencia se concretan en los hitos 3 a 5, sin crear módulos genéricos sin usuarios reales.
 
-Modelo inicial propuesto en Notion: `id`, `job_name`, `status`, `log`, `exit_code`, `created_at`, `analysis_status`, `probable_cause`, `evidence`, `suggested_actions`. Tipos, nulabilidad, defaults y límites se decidirán en el Hito 4. Los campos de análisis podrán quedar vacíos durante la Fase 1 según el contrato que se apruebe.
+El contrato implementado de Fase 1 contiene `id`, `job_name`, `log`, `exit_code` y `created_at`. `job_name` y `log` son entrada obligatoria del cliente; `exit_code` es opcional. El servidor genera el UUID y PostgreSQL asigna la fecha. Se excluye `status` y se guarda `log` en PostgreSQL con un máximo de 64 KiB en UTF-8. Los campos de análisis se reservan para Fase 2; ver [004-incident-contract.md](decisions/004-incident-contract.md).
+
+El modelo y la migración definen el esquema; el ciclo de vida de sesiones y los endpoints se incorporan en los siguientes commits.
 
 El repositorio contiene hoy código en `backend/`, no en `src/`. Esta documentación adopta la jerarquía objetivo para los documentos, pero no describe `src/` como implementación activa.
 
