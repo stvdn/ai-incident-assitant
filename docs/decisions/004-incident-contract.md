@@ -22,4 +22,4 @@ Guardar el log en PostgreSQL permite confirmar incidente y log en una sola trans
 
 La migración `ee06ce8fbc8f` se aplicó y Alembic mostró `head`. El usuario informó 11 pruebas de esquema aprobadas; 3 pruebas de integración comprobaron las restricciones contra PostgreSQL. Explicó que la validación de entrada evita operaciones innecesarias y que la base protege inserciones directas.
 
-El usuario informó que pasó la prueba de creación con PostgreSQL: `created_at` cargado mediante `refresh()` tiene offset UTC y el incidente es visible desde otra sesión. Las pruebas HTTP verifican POST → GET, errores y paginación.
+El usuario informó que pasó la prueba de creación con PostgreSQL: `created_at` cargado mediante `refresh()` tiene offset UTC y el incidente es visible desde otra sesión. El 7 de octubre de 2026 Codex ejecutó la suite completa contra la base de pruebas: 33 casos aprobados, incluyendo POST → GET, paginación, restricciones y transacciones.
