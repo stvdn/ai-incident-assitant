@@ -8,7 +8,7 @@ En Fase 1, el cliente aporta `job_name` y `log`. El servidor genera `id` y `crea
 
 El cliente también puede aportar `exit_code` como entero opcional, limitado al rango de PostgreSQL `Integer` (−2³¹ a 2³¹−1). Su ausencia se representa con `null`: algunos incidentes no provienen de un proceso que haya producido un código de salida. No se infiere un código a partir del log.
 
-El contrato HTTP implementa `job_name` con máximo de 200 caracteres y recorte de espacios externos, conserva el texto original del `log` y rechaza entradas en blanco o que superen 64 KiB. La respuesta define `id` como UUID y `created_at` como `datetime`, y admite lectura desde un objeto ORM. El modelo y la migración están implementados; los endpoints quedan para el Hito 5.
+El contrato HTTP implementa `job_name` con máximo de 200 caracteres y recorte de espacios externos, conserva el texto original del `log` y rechaza entradas en blanco o que superen 64 KiB. La respuesta define `id` como UUID y `created_at` como `datetime`, y admite lectura desde un objeto ORM. El modelo, la migración y la creación desde el servicio están implementados; los endpoints quedan para el Hito 5.
 
 Se excluye `status` del modelo inicial: no hay transiciones de estado del incidente en el alcance Create/Read y el resultado de un job o servicio no puede inferirse de cualquier log con fiabilidad. Se podrá añadir mediante migración cuando exista un caso de uso y una definición precisa.
 
@@ -21,3 +21,5 @@ Guardar el log en PostgreSQL permite confirmar incidente y log en una sola trans
 ## Verificación y seguimiento
 
 La migración `ee06ce8fbc8f` se aplicó y Alembic mostró `head`. El usuario informó 11 pruebas de esquema aprobadas; 3 pruebas de integración comprobaron las restricciones contra PostgreSQL. Explicó que la validación de entrada evita operaciones innecesarias y que la base protege inserciones directas.
+
+El usuario informó que pasó la prueba de creación con PostgreSQL: `created_at` cargado mediante `refresh()` tiene offset UTC y el incidente es visible desde otra sesión.

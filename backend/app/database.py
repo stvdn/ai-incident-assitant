@@ -1,6 +1,8 @@
 import os
 from functools import lru_cache
 from sqlalchemy import create_engine, URL, Engine
+from sqlalchemy.orm import Session
+from collections.abc import Generator
 
 @lru_cache
 def get_engine() -> Engine:
@@ -18,3 +20,13 @@ def get_engine() -> Engine:
         connect_args={"connect_timeout": 5},
         pool_pre_ping=True,
     )
+
+def get_session() -> Generator[Session, None, None]:
+    session = Session(get_engine())
+    try:
+        yield session
+    except Exception:
+        session.rollback()
+        raise
+    finally:
+        session.close()
