@@ -44,3 +44,8 @@ class IncidentResponse(BaseModel):
     log: str
     exit_code: int | None
     created_at: datetime
+
+class IncidentListResponse(BaseModel):
+    items: list[IncidentResponse]
+    limit: int
+    offset: int

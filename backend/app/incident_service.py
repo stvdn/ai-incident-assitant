@@ -14,3 +14,20 @@ def create_incident(session: Session, data: IncidentCreate) -> Incident:
     session.commit()
     session.refresh(incident)
     return incident
+
+def get_incident(session: Session, incident_id: UUID) -> Incident | None:
+    return session.get(Incident, incident_id)
+
+
+def list_incidents(
+    session: Session,
+    limit: int,
+    offset: int,
+) -> list[Incident]:
+    statement = (
+        select(Incident)
+        .order_by(Incident.created_at.desc(), Incident.id.desc())
+        .limit(limit)
+        .offset(offset)
+    )
+    return list(session.scalars(statement).all())
