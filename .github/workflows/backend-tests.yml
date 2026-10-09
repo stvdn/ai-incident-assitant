@@ -1,0 +1,60 @@
+name: Backend tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    env:
+      POSTGRES_DB: incidents_test
+      POSTGRES_USER: incident_test
+      POSTGRES_PASSWORD: local_test_password
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: "5433"
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: incidents_test
+          POSTGRES_USER: incident_test
+          POSTGRES_PASSWORD: local_test_password
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U incident_test -d incidents_test"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 15
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v9
+        with:
+          version: "0.9.17"
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Run unit tests
+        run: uv run --frozen pytest -m unit
+
+      - name: Apply migrations
+        run: uv run --frozen alembic upgrade head
+
+      - name: Run integration tests
+        run: uv run --frozen pytest -m integration
