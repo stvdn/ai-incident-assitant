@@ -5,7 +5,7 @@ from app.models import Incident
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
-
+pytestmark = pytest.mark.integration
 
 def test_session_rolls_back() -> None:
     incident_id = uuid4()

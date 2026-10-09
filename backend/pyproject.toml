@@ -16,3 +16,11 @@ dev = [
     "pytest>=9.1.1",
     "python-dotenv>=1.2.3",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+addopts = "--strict-markers"
+markers = [
+    "unit: pruebas sin infraestructura externa",
+    "integration: pruebas contra PostgreSQL real",
+]

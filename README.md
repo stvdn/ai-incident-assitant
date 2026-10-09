@@ -68,7 +68,15 @@ Esta suite tiene 33 casos: 18 de esquema, configuración y health; 15 de conexi�
 Para ejecutar los 18 casos que no requieren PostgreSQL:
 
 ```powershell
-uv run --frozen pytest test/test_incident.py test/test_config.py test/test_health.py
+uv run --frozen pytest -m unit
 ```
+
+Para ejecutar únicamente integración, después de preparar PostgreSQL y aplicar las migraciones:
+
+```powershell
+uv run --frozen --env-file ../.env.test pytest -m integration
+```
+
+Los marcadores están registrados con `--strict-markers`. Una fixture automática exige `POSTGRES_DB=incidents_test` antes de ejecutar integración; comprueba el nombre configurado, no la identidad del servidor. La limpieza selecciona los datos propios de cada prueba y usa `finally` para ejecutarse aunque falle una aserción.
 
 Al terminar, desde la raíz usa `docker compose -f compose.test.yml down`. La base de pruebas usa `tmpfs`: al recrear el contenedor hay que aplicar las migraciones de nuevo.

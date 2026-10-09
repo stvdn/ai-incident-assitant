@@ -5,6 +5,8 @@ from pydantic import ValidationError
 from uuid import uuid4
 from datetime import datetime, timezone
 
+pytestmark = pytest.mark.unit
+
 def test_create_rejects_blank_job_name() -> None:
     name = " \t"
 

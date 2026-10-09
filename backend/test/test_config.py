@@ -3,10 +3,9 @@ from fastapi.testclient import TestClient
 
 from app.database import get_engine
 from app.main import create_app
-
 from app.config import postgres_port
 
-
+pytestmark = pytest.mark.unit
 
 def test_startup_rejects_missing_database_user(
     monkeypatch: pytest.MonkeyPatch,

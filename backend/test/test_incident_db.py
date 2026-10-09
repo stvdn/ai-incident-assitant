@@ -11,6 +11,8 @@ from app.incident_service import create_incident
 from app.database import get_engine
 from app.models import Incident
 
+pytestmark = pytest.mark.integration
+
 @pytest.mark.parametrize(
     ("job_name", "log"),
     [

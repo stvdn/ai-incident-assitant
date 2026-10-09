@@ -1,5 +1,5 @@
 from uuid import uuid4
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import json
 from io import StringIO
 
@@ -12,6 +12,7 @@ from app.database import get_engine
 from app.main import create_app
 from app.models import Incident
 
+pytestmark = pytest.mark.integration
 
 def test_create_and_read_incident(application_logs: StringIO) -> None:
     payload = {
@@ -88,7 +89,12 @@ def test_incident_http_errors(path: str, expected_status: int) -> None:
 def test_list_incidents_pagination() -> None:
     job_name = f"pagination-{uuid4()}"
     ids = [uuid4() for _ in range(3)]
-    expected_ids = [str(value) for value in sorted(ids, reverse=True)]
+    ordered_ids = sorted(ids, reverse=True)
+    newest_id = ordered_ids[-1]
+    expected_ids = [
+        str(newest_id),
+        *[str(value) for value in ordered_ids[:-1]],
+    ]
     created_at = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
     try:
@@ -103,7 +109,11 @@ def test_list_incidents_pagination() -> None:
                     id=incident_id,
                     job_name=job_name,
                     log="pagination test",
-                    created_at=created_at,
+                    created_at=(
+                        created_at + timedelta(days=1)
+                        if incident_id == newest_id
+                        else created_at
+                    ),
                 )
                 for incident_id in ids
             ])
