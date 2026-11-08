@@ -1,3 +1,4 @@
+name: ai-incident-assitant-tests
 services:
   db-test:
     image: postgres:17

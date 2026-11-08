@@ -1,6 +1,6 @@
 # 005 — Configuración, errores HTTP y logging
 
-**Fecha:** 7 de octubre de 2026. **Estado:** implementado y pruebas reportadas como aprobadas; explicación del usuario pendiente.
+**Fecha:** 7 de octubre de 2026. **Estado:** implementado y verificado; explicación consolidada el 12 de octubre de 2026.
 
 ## Decisión
 
@@ -17,6 +17,8 @@ El middleware convierte excepciones de rutas en respuestas 500 mediante el manej
 La biblioteca estándar evita otra dependencia; los campos explícitos permiten buscar eventos e incidentes y reducen exposición de datos. Omitir texto de excepción y traceback limita el diagnóstico: si resulta insuficiente, añadir contexto técnico seleccionado y pruebas de redacción antes de ampliar lo registrado. La captura de logging en memoria verifica nuestro formatter y los eventos; no constituye una auditoría de todos los logs de terceros ni de fallos de arranque.
 
 ## Evidencia
+
+El 12 de octubre de 2026 el usuario explicó que logs crudos y mensajes de excepciones pueden contener datos sensibles. Se consolidó el uso de identificadores para correlación sin exponer contenido. Se cierra el criterio de explicación del Hito 6; se conservan los límites de diagnóstico descritos arriba.
 
 El usuario confirmó 6 casos de configuración y 9 casos HTTP aprobados. Los tests incluyen error interno simulado, registro del ID del incidente, coincidencia del request ID con la respuesta y ausencia de marcadores sensibles. No se compartió salida exacta de las últimas ejecuciones.
 

@@ -8,6 +8,7 @@ from app.incident import IncidentCreate, IncidentResponse, IncidentListResponse
 from app.incident_service import create_incident, get_incident, list_incidents
 from app.errors import register_error_handlers, handle_unexpected_error
 from app.logging_config import configure_logging
+from app.analysis_routes import router as analysis_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -26,6 +27,7 @@ def create_app() -> FastAPI:
     )
 
     register_error_handlers(app)
+    app.include_router(analysis_router)
 
     @app.middleware("http")
     async def add_request_id(request: Request, call_next) -> Response:

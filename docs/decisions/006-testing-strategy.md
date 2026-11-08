@@ -8,6 +8,8 @@ Separar las 33 pruebas mediante marcadores pytest registrados con `--strict-mark
 
 Preparar PostgreSQL mediante `compose.test.yml` (puerto 5433, tmpfs) y reconstruir el esquema con Alembic. Una fixture automática exige `POSTGRES_DB=incidents_test` antes de ejecutar integración. Este control verifica el nombre configurado, no la identidad del servidor.
 
+Desde el 12 de octubre de 2026, declarar `name: ai-incident-assitant-tests` para separar el proyecto y la red de pruebas de desarrollo. Se observó un contenedor de desarrollo con referencia a una red eliminada cuando ambos Compose compartían proyecto. El usuario confirmó que, con el nombre independiente, levantar y detener pruebas permite seguir consultando el incidente de desarrollo. El costo es mantener dos proyectos visibles en Docker; los comandos documentados no cambian.
+
 Usar UUID/nombres únicos y limpieza selectiva en `finally` para las filas confirmadas. Las restricciones y el rollback se comprueban con transacciones reales. La lectura desde otra sesión verifica que un commit hace persistente el incidente. Paginación exige tabla vacía y se ejecuta secuencialmente; prueba prioridad de fecha, desempate por UUID, páginas consecutivas y agotamiento.
 
 ## Ventaja, costo y alternativas
